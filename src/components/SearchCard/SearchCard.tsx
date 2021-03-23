@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Search } from "react-feather";
+import VisuallyHidden from "@reach/visually-hidden";
 
 function SearchCard() {
+  const [searchText, setSearchText] = useState("");
+
   return (
     <Wrapper>
       <SearchHeading>Hvilken plante vil du vite mer om?</SearchHeading>
       <SearchWrapper>
-        <SearchInput type="text" name="plant" placeholder="f.eks. «rosebusk»" />
-        <SearchButton type="submit"><Search color="white" /></SearchButton>
+        <SearchInput
+          type="text"
+          placeholder="f.eks. «rosebusk»"
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <SearchButton >
+          <VisuallyHidden>Søk</VisuallyHidden>
+          <Search aria-hidden color="white" />
+        </SearchButton>
       </SearchWrapper>
       <ButtonLink href="/">Hva er dette?</ButtonLink>
     </Wrapper>
@@ -34,25 +44,25 @@ const SearchHeading = styled.h2`
 const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
-justify-content: space-between;
+  justify-content: space-between;
   width: 100%;
   margin-bottom: 60px;
 `;
 
 const SearchButton = styled.a`
-display: flex;
-align-items: center;
-justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
- width: 60px;
- height: 42px;
- border: none;
- background-color: var(--secondary-color);
- border-radius: 6px;
+  width: 60px;
+  height: 42px;
+  border: none;
+  background-color: var(--secondary-color);
+  border-radius: 6px;
 
- &:hover {
-   background-color: var(--secondary-dark);
- }
+  &:hover {
+    background-color: var(--secondary-dark);
+  }
 `;
 
 const SearchInput = styled.input`
@@ -70,7 +80,6 @@ const SearchInput = styled.input`
     outline: none;
     border-color: var(--secondary-dark);
   }
-
 `;
 
 const ButtonLink = styled.a`
