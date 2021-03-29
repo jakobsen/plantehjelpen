@@ -1,18 +1,26 @@
 import React from "react";
 import GlobalStyles from "./components/GlobalStyles";
 import Header from "./components/Header";
-import SearchCard from "./components/SearchCard";
-import FooterPicture from "./components/FooterPicture";
+import Home from "./components/Home";
+import PlantInfo from "./components/PlantInfo"
+
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
   return (
-    <>
+    <Router>
       <Header />
-      <FooterPicture />
-      <SearchCard />
+      <Switch>
+        <Route path="/plant/:plantName">
+          <PlantInfo />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
 
       <GlobalStyles />
-    </>
+    </Router>
   );
 }
 

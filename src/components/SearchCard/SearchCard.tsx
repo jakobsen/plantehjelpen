@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Search } from "react-feather";
 import VisuallyHidden from "@reach/visually-hidden";
+import { Link, useHistory } from "react-router-dom";
 
 function SearchCard() {
   const [searchText, setSearchText] = useState("");
+  const history = useHistory();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const inputElement = inputRef.current;
+    inputElement?.focus();
+  }, []);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      history.push(`/plant/${searchText}`);
+    }
+  };
 
   return (
     <Wrapper>
@@ -12,10 +26,12 @@ function SearchCard() {
       <SearchWrapper>
         <SearchInput
           type="text"
+          ref={inputRef}
           placeholder="f.eks. «rosebusk»"
           onChange={(e) => setSearchText(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
-        <SearchButton >
+        <SearchButton to={`/plant/${searchText}`}>
           <VisuallyHidden>Søk</VisuallyHidden>
           <Search aria-hidden color="white" />
         </SearchButton>
@@ -49,7 +65,7 @@ const SearchWrapper = styled.div`
   margin-bottom: 60px;
 `;
 
-const SearchButton = styled.a`
+const SearchButton = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
